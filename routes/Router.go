@@ -4,6 +4,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
+	"go-blog/config"
 	"go-blog/controller"
 	"log"
 	"net/http"
@@ -17,8 +18,8 @@ func buildRender() multitemplate.Renderer {
 	return p
 }
 
-func InitRouter() {
-	gin.SetMode("debug")
+func InitRouter() *gin.Engine {
+	gin.SetMode(config.AppMode)
 
 	engine := gin.New()
 	engine.HTMLRender = buildRender()
@@ -59,8 +60,7 @@ func InitRouter() {
 		})
 	})
 
-	_ = engine.Run(":8321")
-
+	return engine
 }
 
 func Recover(c *gin.Context) {
