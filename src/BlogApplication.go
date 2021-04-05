@@ -1,8 +1,8 @@
 package main
 
 import (
-	"go-blog/config"
-	"go-blog/routes"
+	"blog/src/config"
+	"blog/src/routes"
 )
 
 func main() {

@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"go-blog/config"
-	"go-blog/model"
+	"blog/src/config"
+	"blog/src/model"
 )
 
 func GetArticleById(Id *int) (article model.Article) {

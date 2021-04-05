@@ -1,11 +1,11 @@
 package routes
 
 import (
+	"blog/src/config"
+	"blog/src/controller"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
-	"go-blog/config"
-	"go-blog/controller"
 	"log"
 	"net/http"
 	"runtime/debug"

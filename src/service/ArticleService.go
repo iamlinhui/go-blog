@@ -1,8 +1,8 @@
 package service
 
 import (
-	"go-blog/dao"
-	"go-blog/model"
+	"blog/src/dao"
+	"blog/src/model"
 )
 
 func GetArticleById(Id *int) (article model.Article) {
