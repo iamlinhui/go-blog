@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"blog/src/config"
-	"blog/src/controller"
-	"blog/src/model"
+	"blog/server/config"
+	"blog/server/controller"
+	"blog/server/model"
 	"errors"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/multitemplate"

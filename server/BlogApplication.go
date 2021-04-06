@@ -1,8 +1,8 @@
 package main
 
 import (
-	"blog/src/config"
-	"blog/src/routes"
+	"blog/server/config"
+	"blog/server/routes"
 )
 
 func main() {

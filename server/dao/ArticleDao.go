@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"blog/src/config"
-	"blog/src/model"
+	"blog/server/config"
+	"blog/server/model"
 )
 
 func GetArticleById(Id *int) (article model.Article) {

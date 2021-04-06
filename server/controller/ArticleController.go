@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"blog/src/service"
+	"blog/server/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
