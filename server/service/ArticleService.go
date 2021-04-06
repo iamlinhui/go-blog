@@ -6,15 +6,21 @@ import (
 	"strings"
 )
 
-func GetArticleById(Id int) (article model.Article) {
-	if Id == 0 {
+func GetArticleById(id int) (article model.Article) {
+	if id == 0 {
 		panic(model.GetException(model.ErrorId))
 	}
-	return dao.GetArticleById(Id)
+	return dao.GetArticleById(id)
+}
+
+func GetPublishArticleByUrl(url string) (article model.Article) {
+	if url = strings.TrimSpace(url); len(url) == 0 {
+		panic(model.GetException(model.ErrorUrl))
+	}
+	return dao.GetArticleByIdAndStatus(url, model.ArticleStatusPublish)
 }
 func PagePublishArticleByCategoryPrefix(prefix string, page *model.Page) {
-	prefix = strings.TrimSpace(prefix)
-	if len(prefix) == 0 {
+	if prefix = strings.TrimSpace(prefix); len(prefix) == 0 {
 		panic(model.GetException(model.ErrorPrefix))
 	}
 	category := dao.GetCategoryByPrefix(prefix)

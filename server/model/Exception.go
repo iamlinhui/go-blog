@@ -9,16 +9,18 @@ const (
 	Success     = 0
 	Error       = 100000
 	ErrorId     = 200000
-	NotFound    = 200001
+	ErrorUrl    = 200001
 	ErrorPrefix = 200002
+	NotFound    = 400000
 )
 
 var codeMsg = map[int]string{
 	Success:     "OK",
 	Error:       "FAIL",
 	ErrorId:     "输入ID不合法",
-	NotFound:    "数据不存在",
+	ErrorUrl:    "输入Url不合法",
 	ErrorPrefix: "分类前缀不合法",
+	NotFound:    "数据不存在",
 }
 
 func GetException(code int) *Exception {

@@ -4,6 +4,7 @@ import (
 	"blog/server/config"
 	"blog/server/controller"
 	"blog/server/model"
+	"blog/server/util"
 	"errors"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/multitemplate"
@@ -48,11 +49,17 @@ func InitRouter() *gin.Engine {
 	/*
 		前端展示页面接口
 	*/
-	router := engine.Group("api/v1")
-
+	publicRouter := engine.Group("api/v1")
 	{
-		router.POST("/page", controller.PagePublishArticle)
-		router.POST("/page/category/:prefix", controller.PagePublishArticleByCategoryPrefix)
+		publicRouter.POST("/article/:url", controller.GetPublishArticleByUrl)
+		publicRouter.POST("/page", controller.PagePublishArticle)
+		publicRouter.POST("/page/category/:prefix", controller.PagePublishArticleByCategoryPrefix)
+	}
+
+	privateRouter := engine.Group("api/v1/admin")
+	privateRouter.Use(util.JwtAuth())
+	{
+
 	}
 
 	engine.NoRoute(func(context *gin.Context) {

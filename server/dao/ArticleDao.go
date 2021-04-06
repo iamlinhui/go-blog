@@ -12,8 +12,8 @@ func GetArticleById(id int) (article model.Article) {
 	return
 }
 
-func GetArticleByUrl(url string) (article model.Article) {
-	if err := config.Db.Where("url = ? ", url).First(&article).Error; err != nil {
+func GetArticleByIdAndStatus(url string, status int) (article model.Article) {
+	if err := config.Db.Where("url = ? AND status = ?", url, status).First(&article).Error; err != nil {
 		panic(err)
 	}
 	return
