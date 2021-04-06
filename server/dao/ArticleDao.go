@@ -19,7 +19,7 @@ func GetArticleByUrl(url string) (article model.Article) {
 	return
 }
 
-func PageArticleByCategoryId(categoryId uint, pageNo int, pageSize int, status int) (articleList []model.Article) {
+func PageArticleByCategoryIdAndStatus(categoryId uint, pageNo int, pageSize int, status int) (articleList []model.Article) {
 	sql := `
 			SELECT id,
 				   content,
@@ -43,7 +43,7 @@ func PageArticleByCategoryId(categoryId uint, pageNo int, pageSize int, status i
 	return
 }
 
-func CountArticleByCategoryId(categoryId uint, status int) (count int) {
+func CountArticleByCategoryIdAndStatus(categoryId uint, status int) (count int) {
 	sql := `
 			SELECT COUNT(*)
 			FROM t_article
@@ -52,6 +52,41 @@ func CountArticleByCategoryId(categoryId uint, status int) (count int) {
 			  AND status = ?
 			`
 	if err := config.Db.Raw(sql, categoryId, status).Scan(&count).Error; err != nil {
+		panic(err)
+	}
+	return
+}
+
+func CountArticleByStatus(status int) (count int) {
+	sql := `
+			SELECT COUNT(*)
+			FROM t_article
+					 LEFT JOIN t_relationships ON id = article_id
+			WHERE AND status = ?
+			`
+	if err := config.Db.Raw(sql, status).Scan(&count).Error; err != nil {
+		panic(err)
+	}
+	return
+}
+
+func PageArticleByStatus(pageNo int, pageSize int, status int) (articleList []model.Article) {
+	sql := `
+			SELECT id,
+				   content,
+				   title,
+				   excerpt,
+				   url,
+				   user_id,
+				   create_time,
+				   modify_time,
+				   status,
+				   comment_status
+			FROM t_article
+			WHERE status = ?
+			LIMIT ?,?
+			`
+	if err := config.Db.Raw(sql, status, (pageNo-1)*pageSize, pageSize).Scan(&articleList).Error; err != nil {
 		panic(err)
 	}
 	return

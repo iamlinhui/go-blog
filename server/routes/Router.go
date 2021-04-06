@@ -51,9 +51,8 @@ func InitRouter() *gin.Engine {
 	router := engine.Group("api/v1")
 
 	{
-		// 获取个人设置信息
-		router.GET("index/:id", controller.Index)
-		router.POST("/page/category/:prefix", controller.PageArticleByCategoryPrefix)
+		router.POST("/page", controller.PagePublishArticle)
+		router.POST("/page/category/:prefix", controller.PagePublishArticleByCategoryPrefix)
 	}
 
 	engine.NoRoute(func(context *gin.Context) {
