@@ -6,7 +6,8 @@ import (
 )
 
 func GetArticleById(Id *int) (article model.Article) {
-
-	config.Db.Raw("select ID,post_content FROM wp_posts WHERE ID = ? ", Id).Scan(&article)
+	if err := config.Db.Raw("SELECT ID AS id,post_content FROM wp_posts WHERE ID = ? ", Id).First(&article).Error; err != nil {
+		panic(err)
+	}
 	return
 }

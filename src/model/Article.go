@@ -5,8 +5,8 @@ import (
 )
 
 type Article struct {
-	Id            uint        `gorm:"type:int;not null" json:"id"`                      // 主键
-	Content       string      `gorm:"column:post_content;type:longtext" json:"content"` // 正文
+	Id            uint        `gorm:"column:id;type:int;not null" json:"id"`       // 主键
+	Content       string      `gorm:"column:content;type:longtext" json:"content"` // 正文
 	Title         string      // 题目
 	Excerpt       string      // 摘要
 	Url           string      //文章访问链接

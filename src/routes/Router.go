@@ -3,9 +3,12 @@ package routes
 import (
 	"blog/src/config"
 	"blog/src/controller"
+	"blog/src/model"
+	"errors"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
 	"runtime/debug"
@@ -69,11 +72,25 @@ func Recover(c *gin.Context) {
 			//打印错误堆栈信息
 			log.Printf("panic: %v\n", r)
 			debug.PrintStack()
-			//封装通用json返回
-			c.JSON(http.StatusOK, gin.H{
-				"code": 500,
-				"msg":  "服务器内部错误",
-			})
+			if _, ok := r.(model.Exception); ok {
+				c.JSON(http.StatusOK, r)
+				return
+			}
+			if _, ok := r.(*model.Exception); ok {
+				c.JSON(http.StatusOK, r)
+				return
+			}
+			if err, ok := r.(error); ok {
+				if errors.Is(err, gorm.ErrRecordNotFound) {
+					c.JSON(http.StatusOK, model.GetException(model.NotFound))
+					return
+				}
+				//封装通用json返回
+				c.JSON(http.StatusOK, gin.H{
+					"code": model.Error,
+					"msg":  err.Error(),
+				})
+			}
 		}
 	}()
 	//加载完 defer recover，继续后续接口调用
