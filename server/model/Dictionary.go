@@ -1,8 +1,8 @@
 package model
 
 type Dictionary struct {
-	Id       uint
-	Key      string
-	Value    string
-	Describe string
+	Id        uint
+	Name      string
+	Value     string
+	Introduce string
 }

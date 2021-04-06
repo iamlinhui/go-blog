@@ -53,6 +53,7 @@ func InitRouter() *gin.Engine {
 	{
 		// 获取个人设置信息
 		router.GET("index/:id", controller.Index)
+		router.POST("/page/category/:prefix", controller.PageArticleByCategoryPrefix)
 	}
 
 	engine.NoRoute(func(context *gin.Context) {

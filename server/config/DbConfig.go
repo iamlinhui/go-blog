@@ -33,6 +33,7 @@ func init() {
 		// 禁用默认事务（提高运行速度）
 		SkipDefaultTransaction: true,
 		NamingStrategy: schema.NamingStrategy{
+			TablePrefix: "t_",
 			// 使用单数表名，启用该选项，此时，`User` 的表名应该是 `user`
 			SingularTable: true,
 		},
