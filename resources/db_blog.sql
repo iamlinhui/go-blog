@@ -25,6 +25,7 @@ CREATE TABLE db_blog.t_category
     id     bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
     name   varchar(255)    NOT NULL DEFAULT '' COMMENT '分类目录中文名(展示)',
     prefix varchar(255)    NOT NULL DEFAULT '' COMMENT '分类目录访问前缀(url)',
+    sort   tinyint         NOT NULL DEFAULT 0  COMMENT '标签排序',
     PRIMARY KEY (id),
     UNIQUE INDEX unique_idx_url (prefix)
 ) ENGINE = InnoDB

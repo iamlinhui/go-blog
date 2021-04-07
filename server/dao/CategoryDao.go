@@ -13,7 +13,7 @@ func GetCategoryByPrefix(prefix string) (category model.Category) {
 }
 
 func ListListCategory() (categoryList []model.Category) {
-	if err := config.Db.Find(&categoryList).Error; err != nil {
+	if err := config.Db.Find(&categoryList).Order("sort").Error; err != nil {
 		panic(err)
 	}
 	return
