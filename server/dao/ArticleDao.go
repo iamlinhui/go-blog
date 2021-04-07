@@ -41,9 +41,7 @@ func CountArticleByCategoryIdAndStatus(categoryId uint, status int) (count int) 
 }
 
 func CountArticleByStatus(status int) (count int) {
-	sql := `SELECT COUNT(*)
-			FROM t_article LEFT JOIN t_relationships ON id = article_id
-			WHERE AND status = ?`
+	sql := `SELECT COUNT(*) FROM t_article WHERE status = ?`
 	if err := config.Db.Raw(sql, status).Scan(&count).Error; err != nil {
 		panic(err)
 	}

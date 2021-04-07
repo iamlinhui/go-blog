@@ -43,9 +43,7 @@ func InitRouter() *gin.Engine {
 			MaxAge:           12 * time.Hour,
 		},
 	))
-	engine.Static("/css", "web/dist/css")
-	engine.Static("/img", "web/dist/img")
-	engine.Static("/js", "web/dist/js")
+	engine.Static("/static", "web/dist/static")
 	engine.StaticFile("/favicon.ico", "web/dist/favicon.ico")
 
 	engine.GET("/", func(c *gin.Context) {
@@ -54,7 +52,7 @@ func InitRouter() *gin.Engine {
 	/*
 		前端展示页面接口
 	*/
-	publicRouter := engine.Group("api/v1")
+	publicRouter := engine.Group("/api/v1")
 	{
 		// 首页分页展示
 		publicRouter.POST("/page", controller.PagePublishArticle)
@@ -69,7 +67,7 @@ func InitRouter() *gin.Engine {
 		publicRouter.POST("/page/category/:prefix", controller.PagePublishArticleByCategoryPrefix)
 	}
 
-	privateRouter := engine.Group("api/v1/admin")
+	privateRouter := engine.Group("/api/v1/admin")
 	privateRouter.Use(util.JwtAuth())
 	{
 
