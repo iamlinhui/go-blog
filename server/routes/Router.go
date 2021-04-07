@@ -26,6 +26,7 @@ func InitRouter() *gin.Engine {
 	gin.SetMode(config.AppMode)
 
 	engine := gin.New()
+
 	engine.HTMLRender = buildRender()
 	engine.Use(Recover)
 	engine.Use(cors.New(
