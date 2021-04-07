@@ -7,4 +7,5 @@ import (
 
 func main() {
 	_ = routes.InitRouter().Run(config.HttpPort)
+
 }

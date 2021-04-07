@@ -9,9 +9,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
+	"reflect"
 	"runtime/debug"
 	"time"
 )
@@ -24,6 +27,7 @@ func buildRender() multitemplate.Renderer {
 
 func InitRouter() *gin.Engine {
 	gin.SetMode(config.AppMode)
+	RegisterValidate()
 
 	engine := gin.New()
 
@@ -78,7 +82,6 @@ func InitRouter() *gin.Engine {
 			"msg":  "请求路径不正确",
 		})
 	})
-
 	return engine
 }
 
@@ -111,4 +114,24 @@ func Recover(c *gin.Context) {
 	}()
 	//加载完 defer recover，继续后续接口调用
 	c.Next()
+}
+
+func RegisterValidate() {
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		// 注册 model.LocalTime 类型的自定义校验规则
+		v.RegisterCustomTypeFunc(ValidateJSONDateType, model.LocalTime{})
+	}
+}
+
+func ValidateJSONDateType(field reflect.Value) interface{} {
+	if field.Type() == reflect.TypeOf(model.LocalTime{}) {
+		timeStr := field.Interface().(model.LocalTime).String()
+		// 0001-01-01 00:00:00 是 go 中 time.Time 类型的空值
+		// 这里返回 Nil 则会被 validator 判定为空值，而无法通过 `binding:"required"` 规则
+		if timeStr == "0001-01-01 00:00:00" {
+			return nil
+		}
+		return timeStr
+	}
+	return nil
 }
