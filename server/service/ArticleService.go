@@ -37,3 +37,8 @@ func PagePublishArticle(page *model.Page) {
 	}
 	page.Data = dao.PageArticleByStatus(page.PageNo, page.PageSize, model.ArticleStatusPublish)
 }
+
+func ListRecentlyPublishArticle(limit int) (articleList []model.Article) {
+	articleList = dao.ListRecentlyArticle(model.ArticleStatusPublish, limit)
+	return
+}

@@ -39,3 +39,11 @@ func PagePublishArticleByCategoryPrefix(c *gin.Context) {
 		"data":   page,
 	})
 }
+
+func ListRecentlyPublishArticle(c *gin.Context) {
+	data := service.ListRecentlyPublishArticle(10)
+	c.JSON(http.StatusOK, gin.H{
+		"status": model.Success,
+		"data":   data,
+	})
+}

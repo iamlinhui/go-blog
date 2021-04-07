@@ -20,23 +20,10 @@ func GetArticleByIdAndStatus(url string, status int) (article model.Article) {
 }
 
 func PageArticleByCategoryIdAndStatus(categoryId uint, pageNo int, pageSize int, status int) (articleList []model.Article) {
-	sql := `
-			SELECT id,
-				   content,
-				   title,
-				   excerpt,
-				   url,
-				   user_id,
-				   create_time,
-				   modify_time,
-				   status,
-				   comment_status
-			FROM t_article
-					 LEFT JOIN t_relationships ON id = article_id
-			WHERE category_id = ?
-			  AND status = ?
-			LIMIT ?,?
-			`
+	sql := `SELECT id,content,title,excerpt,url,user_id,create_time,modify_time,status,comment_status
+			FROM t_article LEFT JOIN t_relationships ON id = article_id
+			WHERE category_id = ? AND status = ?
+			ORDER BY id LIMIT ?,?`
 	if err := config.Db.Raw(sql, categoryId, status, (pageNo-1)*pageSize, pageSize).Scan(&articleList).Error; err != nil {
 		panic(err)
 	}
@@ -44,13 +31,9 @@ func PageArticleByCategoryIdAndStatus(categoryId uint, pageNo int, pageSize int,
 }
 
 func CountArticleByCategoryIdAndStatus(categoryId uint, status int) (count int) {
-	sql := `
-			SELECT COUNT(*)
-			FROM t_article
-					 LEFT JOIN t_relationships ON id = article_id
-			WHERE category_id = ?
-			  AND status = ?
-			`
+	sql := `SELECT COUNT(*)
+			FROM t_article LEFT JOIN t_relationships ON id = article_id
+			WHERE category_id = ? AND status = ?`
 	if err := config.Db.Raw(sql, categoryId, status).Scan(&count).Error; err != nil {
 		panic(err)
 	}
@@ -58,12 +41,9 @@ func CountArticleByCategoryIdAndStatus(categoryId uint, status int) (count int) 
 }
 
 func CountArticleByStatus(status int) (count int) {
-	sql := `
-			SELECT COUNT(*)
-			FROM t_article
-					 LEFT JOIN t_relationships ON id = article_id
-			WHERE AND status = ?
-			`
+	sql := `SELECT COUNT(*)
+			FROM t_article LEFT JOIN t_relationships ON id = article_id
+			WHERE AND status = ?`
 	if err := config.Db.Raw(sql, status).Scan(&count).Error; err != nil {
 		panic(err)
 	}
@@ -71,22 +51,20 @@ func CountArticleByStatus(status int) (count int) {
 }
 
 func PageArticleByStatus(pageNo int, pageSize int, status int) (articleList []model.Article) {
-	sql := `
-			SELECT id,
-				   content,
-				   title,
-				   excerpt,
-				   url,
-				   user_id,
-				   create_time,
-				   modify_time,
-				   status,
-				   comment_status
-			FROM t_article
-			WHERE status = ?
-			LIMIT ?,?
-			`
+	sql := `SELECT id,content,title,excerpt,url,user_id,create_time,modify_time,status,comment_status
+			FROM t_article WHERE status = ? 
+			ORDER BY id LIMIT ?,?`
 	if err := config.Db.Raw(sql, status, (pageNo-1)*pageSize, pageSize).Scan(&articleList).Error; err != nil {
+		panic(err)
+	}
+	return
+}
+
+func ListRecentlyArticle(status int, limit int) (articleList []model.Article) {
+	sql := `SELECT id,content,title,excerpt,url,user_id,create_time,modify_time,status,comment_status
+			FROM t_article WHERE status = ? 
+			ORDER BY create_time DESC LIMIT ?`
+	if err := config.Db.Raw(sql, status, limit).Scan(&articleList).Error; err != nil {
 		panic(err)
 	}
 	return

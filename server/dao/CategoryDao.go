@@ -11,3 +11,10 @@ func GetCategoryByPrefix(prefix string) (category model.Category) {
 	}
 	return
 }
+
+func ListListCategory() (categoryList []model.Category) {
+	if err := config.Db.Find(&categoryList).Error; err != nil {
+		panic(err)
+	}
+	return
+}

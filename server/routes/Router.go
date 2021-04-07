@@ -52,8 +52,16 @@ func InitRouter() *gin.Engine {
 	*/
 	publicRouter := engine.Group("api/v1")
 	{
-		publicRouter.POST("/article/:url", controller.GetPublishArticleByUrl)
+		// 首页分页展示
 		publicRouter.POST("/page", controller.PagePublishArticle)
+		// 所有文章分类标签
+		publicRouter.POST("/category", controller.ListCategory)
+		// 最近文章列表
+		publicRouter.POST("/recently", controller.ListRecentlyPublishArticle)
+
+		// 文章详情
+		publicRouter.POST("/article/:url", controller.GetPublishArticleByUrl)
+		// 根据分类分页展示
 		publicRouter.POST("/page/category/:prefix", controller.PagePublishArticleByCategoryPrefix)
 	}
 
