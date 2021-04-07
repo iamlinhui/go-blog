@@ -88,9 +88,6 @@ func InitRouter() *gin.Engine {
 func Recover(c *gin.Context) {
 	defer func() {
 		if r := recover(); r != nil {
-			//打印错误堆栈信息
-			log.Printf("panic: %v\n", r)
-			debug.PrintStack()
 			if _, ok := r.(model.Exception); ok {
 				c.JSON(http.StatusOK, r)
 				return
@@ -110,6 +107,9 @@ func Recover(c *gin.Context) {
 					"msg":  err.Error(),
 				})
 			}
+			//打印错误堆栈信息
+			log.Printf("panic: %v\n", r)
+			debug.PrintStack()
 		}
 	}()
 	//加载完 defer recover，继续后续接口调用
