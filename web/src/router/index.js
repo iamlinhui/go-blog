@@ -14,7 +14,7 @@ export const constantRoutes = [
     },
     {
         path: '/404',
-        component: () => import('@/views/errorPage/404'),
+        component: () => import('@/views/error/404'),
         meta: {
             title: '找不到页面'
         }

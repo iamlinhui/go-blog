@@ -3,7 +3,13 @@
   <el-container>
     <el-header>Header</el-header>
     <el-container>
-      <el-main>{{ page.data }}</el-main>
+      <el-main>
+        {{ page.data }}
+        <el-pagination background layout="prev, pager, next"
+                       :total="page.totalCount"
+                       :page-size="page.pageSize"
+                       :current-page="page.pageNo"/>
+      </el-main>
       <el-aside width="200px">Aside</el-aside>
     </el-container>
     <el-footer>Footer</el-footer>
@@ -22,7 +28,7 @@ export default {
         totalCount: 0,
         pageNo: 1,
         pageSize: 1,
-        data: [
+        list: [
           {
             content: '',
             title: '',
@@ -54,10 +60,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-
 
 .el-header, .el-footer {
   background-color: #B3C0D1;

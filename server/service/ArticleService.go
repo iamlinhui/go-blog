@@ -28,14 +28,14 @@ func PagePublishArticleByCategoryPrefix(prefix string, page *model.Page) {
 	if page.TotalCount = dao.CountArticleByCategoryIdAndStatus(category.Id, model.ArticleStatusPublish); page.TotalCount == 0 {
 		return
 	}
-	page.Data = dao.PageArticleByCategoryIdAndStatus(category.Id, page.PageNo, page.PageSize, model.ArticleStatusPublish)
+	page.List = dao.PageArticleByCategoryIdAndStatus(category.Id, page.PageNo, page.PageSize, model.ArticleStatusPublish)
 }
 
 func PagePublishArticle(page *model.Page) {
 	if page.TotalCount = dao.CountArticleByStatus(model.ArticleStatusPublish); page.TotalCount == 0 {
 		return
 	}
-	page.Data = dao.PageArticleByStatus(page.PageNo, page.PageSize, model.ArticleStatusPublish)
+	page.List = dao.PageArticleByStatus(page.PageNo, page.PageSize, model.ArticleStatusPublish)
 }
 
 func ListRecentlyPublishArticle(limit int) (articleList []model.Article) {
