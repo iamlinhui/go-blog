@@ -23,7 +23,7 @@ func PageArticleByCategoryIdAndStatus(categoryId uint, pageNo int, pageSize int,
 	sql := `SELECT id,content,title,excerpt,url,user_id,create_time,modify_time,status,comment_status
 			FROM t_article LEFT JOIN t_relationships ON id = article_id
 			WHERE category_id = ? AND status = ?
-			ORDER BY id LIMIT ?,?`
+			ORDER BY id DESC LIMIT ?,?`
 	if err := config.Db.Raw(sql, categoryId, status, (pageNo-1)*pageSize, pageSize).Scan(&articleList).Error; err != nil {
 		panic(err)
 	}
@@ -51,7 +51,7 @@ func CountArticleByStatus(status int) (count int) {
 func PageArticleByStatus(pageNo int, pageSize int, status int) (articleList []model.Article) {
 	sql := `SELECT id,content,title,excerpt,url,user_id,create_time,modify_time,status,comment_status
 			FROM t_article WHERE status = ? 
-			ORDER BY id LIMIT ?,?`
+			ORDER BY id DESC LIMIT ?,?`
 	if err := config.Db.Raw(sql, status, (pageNo-1)*pageSize, pageSize).Scan(&articleList).Error; err != nil {
 		panic(err)
 	}
@@ -61,7 +61,7 @@ func PageArticleByStatus(pageNo int, pageSize int, status int) (articleList []mo
 func ListRecentlyArticle(status int, limit int) (articleList []model.Article) {
 	sql := `SELECT id,content,title,excerpt,url,user_id,create_time,modify_time,status,comment_status
 			FROM t_article WHERE status = ? 
-			ORDER BY create_time DESC LIMIT ?`
+			ORDER BY modify_time DESC LIMIT ?`
 	if err := config.Db.Raw(sql, status, limit).Scan(&articleList).Error; err != nil {
 		panic(err)
 	}
