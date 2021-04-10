@@ -75,10 +75,7 @@ func InitRouter() *gin.Engine {
 
 	engine.NoRoute(func(context *gin.Context) {
 		// context.Redirect(302,"/") 重定向到主页
-		context.JSON(http.StatusOK, gin.H{
-			"code": 404,
-			"msg":  "请求路径不正确",
-		})
+		context.JSON(http.StatusOK, model.GetException(model.UrlNotFound))
 	})
 	return engine
 }
@@ -100,10 +97,7 @@ func Recover(c *gin.Context) {
 					return
 				}
 				//封装通用json返回
-				c.JSON(http.StatusOK, gin.H{
-					"code": model.Error,
-					"msg":  err.Error(),
-				})
+				c.JSON(http.StatusOK, model.BuildException(model.Error, err.Error()))
 			}
 			//打印错误堆栈信息
 			log.Printf("panic: %v\n", r)

@@ -9,10 +9,7 @@ import (
 
 func GetPublishArticleByUrl(c *gin.Context) {
 	data := service.GetPublishArticleByUrl(c.Param("url"))
-	c.JSON(http.StatusOK, gin.H{
-		"status": model.Success,
-		"data":   data,
-	})
+	c.JSON(http.StatusOK, model.Ok(data))
 }
 
 func PagePublishArticle(c *gin.Context) {
@@ -21,10 +18,7 @@ func PagePublishArticle(c *gin.Context) {
 		panic(err)
 	}
 	service.PagePublishArticle(&page)
-	c.JSON(http.StatusOK, gin.H{
-		"status": model.Success,
-		"data":   page,
-	})
+	c.JSON(http.StatusOK, model.Ok(page))
 }
 
 func PagePublishArticleByCategoryPrefix(c *gin.Context) {
@@ -34,16 +28,10 @@ func PagePublishArticleByCategoryPrefix(c *gin.Context) {
 	}
 	prefix := c.Param("prefix")
 	service.PagePublishArticleByCategoryPrefix(prefix, &page)
-	c.JSON(http.StatusOK, gin.H{
-		"status": model.Success,
-		"data":   page,
-	})
+	c.JSON(http.StatusOK, model.Ok(page))
 }
 
 func ListRecentlyPublishArticle(c *gin.Context) {
 	data := service.ListRecentlyPublishArticle(10)
-	c.JSON(http.StatusOK, gin.H{
-		"status": model.Success,
-		"data":   data,
-	})
+	c.JSON(http.StatusOK, model.Ok(data))
 }

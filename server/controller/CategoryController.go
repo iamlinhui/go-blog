@@ -9,8 +9,5 @@ import (
 
 func ListCategory(c *gin.Context) {
 	data := service.ListCategory()
-	c.JSON(http.StatusOK, gin.H{
-		"status": model.Success,
-		"data":   data,
-	})
+	c.JSON(http.StatusOK, model.Ok(data))
 }
