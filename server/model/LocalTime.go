@@ -7,6 +7,7 @@ import (
 
 const TimeFormat = "2006-01-02 15:04:05"
 
+// 将LocalTime定义为time.Time类型
 type LocalTime time.Time
 
 func (t *LocalTime) UnmarshalJSON(data []byte) (err error) {
